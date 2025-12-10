@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
+    public function index()
+    {
+        $doctors = Doctor::with(['user', 'appointments'])->get();
+
+        return response()->json($doctors);
+    }
+
     public function show($id)
     {
         $doctor = Doctor::with(['user', 'appointments'])->find($id);
@@ -31,6 +38,15 @@ class DoctorController extends Controller
             'appointments_count' => $doctor->appointments()->count(),
             'created_at' => $doctor->created_at->format('Y-m-d\TH:i:s.v\Z'),
         ]);
+    }
+
+    Public function profession($profession)
+    {
+        $doctors = Doctor::with(['user', 'appointments'])
+            ->where('specialization', $profession)
+            ->get();
+
+        return response()->json($doctors);
     }
 
     public function store(Request $request)

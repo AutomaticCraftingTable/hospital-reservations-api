@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    public function index()
+    {
+        $doctors = Client::with(['user', 'appointments'])->get();
+
+        return response()->json($doctors);
+    }
+
     public function show($id)
     {
         $client = Client::with(['user', 'appointments'])->find($id);

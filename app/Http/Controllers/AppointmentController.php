@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
+    public function index()
+    {
+        $doctors = Appointment::with(['doctor.user', 'client.user'])->get();
+
+        return response()->json($doctors);
+    }
+
     public function show($id)
     {
         $appointment = Appointment::with(['doctor.user', 'client.user'])->find($id);
