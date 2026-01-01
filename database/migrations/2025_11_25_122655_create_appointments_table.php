@@ -17,7 +17,7 @@ return new class () extends Migration {
             $table->timestamp('starting_at')->nullable();
             $table->timestamp('ending_at')->nullable();
             $table->string('room')->nullable();
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
 
             $table->foreign('doctor_id')
                 ->references('id')->on('doctors')

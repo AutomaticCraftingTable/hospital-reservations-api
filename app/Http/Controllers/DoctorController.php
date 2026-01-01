@@ -40,7 +40,7 @@ class DoctorController extends Controller
         ]);
     }
 
-    Public function profession($profession)
+    public function profession($profession)
     {
         $doctors = Doctor::with(['user', 'appointments'])
             ->where('specialization', $profession)

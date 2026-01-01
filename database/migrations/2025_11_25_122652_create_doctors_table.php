@@ -14,7 +14,7 @@ return new class () extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->string('description')->nullable();
             $table->string('specialization')->nullable();
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')->on('users')

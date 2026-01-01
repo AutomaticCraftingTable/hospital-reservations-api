@@ -10,65 +10,65 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-   public function registerClient(Request $request)
+    public function registerClient(Request $request)
     {
         $fields = $request->validate([
-            'name'     => 'required|max:255',
-            'email'    => 'required|email|unique:users',
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
-            'gender'   => 'nullable|string',
-            'pesel'    => 'nullable|string'
+            'gender' => 'nullable|string',
+            'pesel' => 'nullable|string',
         ]);
 
         $user = User::create([
-            'name'     => $fields['name'],
-            'email'    => $fields['email'],
+            'name' => $fields['name'],
+            'email' => $fields['email'],
             'password' => Hash::make($fields['password']),
         ]);
 
         Client::create([
             'user_id' => $user->id,
-            'gender'  => $fields['gender'] ?? null,
-            'pesel'   => $fields['pesel'] ?? null,
+            'gender' => $fields['gender'] ?? null,
+            'pesel' => $fields['pesel'] ?? null,
         ]);
 
         $token = $user->createToken('client_token')->plainTextToken;
 
         return response()->json([
-            'user'  => $user,
+            'user' => $user,
             'token' => $token,
-            'role'  => 'client'
+            'role' => 'client',
         ], 201);
     }
 
     public function registerDoctor(Request $request)
     {
         $fields = $request->validate([
-            'name'           => 'required|max:255',
-            'email'          => 'required|email|unique:users',
-            'password'       => 'required|confirmed',
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed',
             'specialization' => 'nullable|string',
-            'description'    => 'nullable|string'
+            'description' => 'nullable|string',
         ]);
 
         $user = User::create([
-            'name'     => $fields['name'],
-            'email'    => $fields['email'],
+            'name' => $fields['name'],
+            'email' => $fields['email'],
             'password' => Hash::make($fields['password']),
         ]);
 
         Doctor::create([
-            'user_id'       => $user->id,
-            'specialization'=> $fields['specialization'] ?? null,
-            'description'   => $fields['description'] ?? null,
+            'user_id' => $user->id,
+            'specialization' => $fields['specialization'] ?? null,
+            'description' => $fields['description'] ?? null,
         ]);
 
         $token = $user->createToken('doctor_token')->plainTextToken;
 
         return response()->json([
-            'user'  => $user,
+            'user' => $user,
             'token' => $token,
-            'role'  => 'doctor'
+            'role' => 'doctor',
         ], 201);
     }
 

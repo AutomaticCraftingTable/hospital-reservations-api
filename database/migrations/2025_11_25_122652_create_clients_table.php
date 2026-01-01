@@ -12,9 +12,9 @@ return new class () extends Migration {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->timestamp('created_at')->useCurrent();
             $table->string('gender')->nullable();
             $table->string('pesel')->nullable();
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')->on('users')

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
-
 use App\Http\Controllers\AuthController;
 
 Route::middleware("auth:sanctum")->get("/user", fn (Request $request): JsonResponse => new JsonResponse($request->user()));
@@ -47,7 +46,7 @@ Route::prefix('clients')->group(function () {
 Route::prefix('doctors')->group(function () {
     Route::get("/", [DoctorController::class, "index"]);
     Route::get("/{id}", [DoctorController::class, "show"]);
-    Route::get("/profession/{profession}", [DoctorController::class, "proffesion"]);
+    Route::get("/profession/{profession}", [DoctorController::class, "profession"]);
     Route::post("/", [DoctorController::class, "store"])->middleware("auth:sanctum");
     Route::put("/{id}", [DoctorController::class, "update"])->middleware("auth:sanctum");
     Route::delete("/{id}", [DoctorController::class, "destroy"])->middleware("auth:sanctum");
