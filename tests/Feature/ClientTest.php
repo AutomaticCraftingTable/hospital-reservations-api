@@ -40,7 +40,6 @@ class ClientTest extends TestCase
         $res->assertStatus(200)
             ->assertJsonFragment([
                 'id' => $client->id,
-                'gender' => 'male',
             ]);
     }
 

@@ -13,17 +13,22 @@ class AuthController extends Controller
     public function registerClient(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
             'gender' => 'nullable|string',
             'pesel' => 'nullable|string',
+            'phone' => 'nullable|string',
         ]);
 
         $user = User::create([
             'name' => $fields['name'],
+            'surname' => $fields['surname'],
             'email' => $fields['email'],
             'password' => Hash::make($fields['password']),
+            'isDoctor' => false,
+            'phone' => $fields['phone'] ?? null,
         ]);
 
         Client::create([
@@ -44,7 +49,8 @@ class AuthController extends Controller
     public function registerDoctor(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
             'specialization' => 'nullable|string',
@@ -53,8 +59,10 @@ class AuthController extends Controller
 
         $user = User::create([
             'name' => $fields['name'],
+            'surname' => $fields['surname'],
             'email' => $fields['email'],
             'password' => Hash::make($fields['password']),
+            'isDoctor' => true,
         ]);
 
         Doctor::create([
