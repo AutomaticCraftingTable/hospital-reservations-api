@@ -77,7 +77,7 @@ class AuthController extends Controller
             'user' => $user,
             'token' => $token,
             'role' => 'doctor',
-        ], 201);
+        ], status: 201);
     }
 
     public function login(Request $request)
@@ -89,9 +89,9 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return [
+            return response()->json([
                 'message' => 'The provided credentials are incorrect.',
-            ];
+            ], 401);
         }
         $token = $user->createToken($user->name);
         return [
