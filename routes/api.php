@@ -21,16 +21,13 @@ Route::prefix('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 });
 
-
-
-
 Route::prefix('appointments')->group(function () {
+    Route::get("/me", [AppointmentController::class, "getMyAppointments"])->middleware("auth:sanctum");
     Route::get("/", [AppointmentController::class, "index"]);
     Route::get("/{id}", [AppointmentController::class, "show"]);
     Route::post("/", [AppointmentController::class, "store"])->middleware("auth:sanctum");
     Route::put("/{id}", [AppointmentController::class, "update"])->middleware("auth:sanctum");
     Route::delete("/{id}", [AppointmentController::class, "destroy"])->middleware("auth:sanctum");
-    Route::get("/me", [AppointmentController::class, "getMyAppointments"])->middleware("auth:sanctum");
 });
 
 
